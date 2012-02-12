@@ -7,3 +7,5 @@ WEB/public/photos/*
 WEB/config/config.yml
 WEB/config/database.yml
 DESKTOP/PhotoBoothApp.air
+.project
+*/.project
