@@ -1,0 +1,9 @@
+WEB/.project
+.bundle
+WEB/db/*.sqlite3
+WEB/log/*.log
+WEB/tmp/**/*
+WEB/public/photos/*
+WEB/config/config.yml
+WEB/config/database.yml
+DESKTOP/PhotoBoothApp.air

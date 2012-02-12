@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= h(yield(:title) || "Untitled") %></title>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon-precomposed" href="/images/photobooth_icon.png"/>
+    <%= stylesheet_link_tag "/javascripts/jquery.mobile-1.0a4.1/jquery.mobile-1.0a4.1.min.css" %>
+	<%= stylesheet_link_tag 'mobile' %>
+    <%= javascript_include_tag :defaults, "jquery.mobile-1.0a4.1/jquery.mobile-1.0a4.1.min.js" %>
+    <%= yield(:head) %>
+	<script type="text/javascript">
+		$(document).bind("mobileinit", function(){
+		  $.extend(  $.mobile , {
+		    ajaxEnabled: false
+		  });
+		});
+		
+		$(document).ready(function() {
+			$('#refresh_photos').live('tap', function() {
+				$('#Page ul').listview('refresh');
+			});
+		});
+	</script>
+  </head>
+  <body>
+    <div class="current">
+      <%- if show_title? -%>
+      <div class="toolbar">
+        <%= link_to "Back", nil, :class => "back" unless current_page? root_path %>
+        <h1><%=h yield(:title) %></h1>
+        <%= link_to "Full Site", root_url(:mobile => 0), :class => "button", :rel => "external" %>
+        <%= yield(:toolbar) %>
+      </div>
+      <%- end -%>
+      
+      <% unless flash.empty? %>
+        <div class="info">
+        <%- flash.each do |name, msg| -%>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <%- end -%>
+        </div>
+      <% end %>
+    
+      <%= yield %>
+    </div>
+  </body>
+</html>
+

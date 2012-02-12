@@ -1,0 +1,17 @@
+<% title "Photo" %>
+
+<p>
+  <strong>Title:</strong>
+  <%= @photo.title %>
+</p>
+
+<p>
+	<strong>Image:</strong><br />
+	<%= image_tag @photo.image.url(:large) %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_photo_path(@photo) %> |
+  <%= link_to "Destroy", @photo, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", photos_path %>
+</p>

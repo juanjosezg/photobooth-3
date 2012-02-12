@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : "Photo Booth" %></title>
+
+    <%= stylesheet_link_tag "application" %>
+	
+    <%= javascript_include_tag :defaults %>
+	<%= javascript_include_tag 'swfobject' %>
+	<script type="text/javascript">
+		var flashvars = {};
+
+		var params = {};
+		params.menu = "false";
+		params.allowfullscreen = "true";
+		params.allownetworking = "all";
+
+		var attributes = {};
+		attributes.id = "myCamera";
+		attributes.name = "myCamera";
+
+		swfobject.embedSWF("swfs/PhotoBooth.swf", "myCamera", "1024", "768", "10.1.0", "expressInstall.swf", flashvars, params, attributes);
+	</script>
+	
+    <%= csrf_meta_tag %>
+    <%= yield(:head) %>
+  </head>
+  <body>
+		<div id="camera">
+			<%= yield %>
+		</div>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   showStatusBar="false"
+					   windowComplete="init()"
+					   applicationComplete="registerGlobalKeyHandler();"
+					   height="768">
+	
+	<fx:Script source="cam.as"/>
+	
+	<fx:Declarations>
+		<fx:String id="remoteURL">http://localhost:3000/camerasnap</fx:String>
+		
+		<mx:Fade id="flashFX" duration="500" />
+		
+		<s:Parallel id="discardPhoto">
+			<mx:Zoom
+				duration="350" 
+				zoomWidthFrom="1.0"								   
+				zoomWidthTo="0"								   
+				zoomHeightFrom="1.0"								   
+				zoomHeightTo="0"								   
+				target="{previewBox}"/>
+			<mx:Fade duration="350"/>
+		</s:Parallel>
+		
+		<s:HTTPService id="handleService"
+					   url='{remoteURL}'
+					   contentType = "application/xml"
+					   resultFormat = "e4x"
+					   method = "POST"
+					   result="httpResult(event);"
+					   fault="httpFault(event);" />
+		
+	</fx:Declarations>
+	
+	<s:Group id="videoArea" width="100%" height="100%">
+		
+		<mx:VideoDisplay id="theCam" width="100%" height="100%"/>
+		
+		<s:Group id="previewBox" visible="false" hideEffect="discardPhoto">
+			<mx:Image id="preview" width="100%" height="100%"/>	
+			
+			<s:BorderContainer 
+				id="flashLight" 
+				width="100%" 
+				height="100%" 
+				hideEffect="{flashFX}"  
+				backgroundColor="white" 
+				backgroundAlpha="1" borderVisible="false"/>
+		</s:Group>
+		
+		<s:Label x="0" y="0" text="Ready" color="#FFFFFF" fontSize="300" verticalAlign="middle" textAlign="center" width="100%" height="100%" id="counterDisplay" visible="false" alpha=".8" fontFamily="Verdana"/>
+		
+		<s:HGroup visible="false" x="0" width="100%" height="100" bottom="0" requestedColumnCount="2" gap="10" verticalAlign="middle" paddingLeft="10" paddingTop="10" paddingRight="10" paddingBottom="10" id="saveResetBlock">
+			<s:Button
+				id="resetPic"					
+				height="100%" 					
+				click="discardPicture();"  														
+				label="Left arrow key to retake"
+				chromeColor="#E94933" 
+				color="#ffffff" focusColor="#FF1E1E" fontSize="36" x="463" bottom="8" width="50%"/>
+			
+			<s:Button 
+				id="savePic" 
+				label="Right arrow key to save!" 
+				height="100%" 
+				click="savePicture();"
+				x="612" bottom="8" width="50%" fontSize="36" chromeColor="#8BF358" focusColor="#47FD0F"/>
+		</s:HGroup>
+		
+		<s:BorderContainer 
+			bottom="0" 
+			width="100%" 
+			backgroundColor="black" 
+			backgroundAlpha="0.0" 
+			borderColor="black" 
+			height="100" borderVisible="false" borderWeight="0" id="controlBlock">
+			
+			<s:Button
+				id="trigger"					
+				horizontalCenter="-1" 
+				height="80" 					
+				click="initPicture();"  														
+				label="Press the spacebar to take a picture!"
+				chromeColor="#33abe9" 
+				color="#ffffff" bottom="10" fontSize="36" width="800"/>
+			
+		</s:BorderContainer>
+		
+		<s:ToggleButton label="Toggle fullscreen"
+						id="fullscreenButton"
+						click="toggleFullScreen()"
+						right="10" top="10" height="35" width="111"/>
+		
+		<s:TextInput height="35" id="remoteURLField" change="serverURL_changeHandler(event)" text="{remoteURL}" fontSize="18" top="10" left="10" width="835"/>
+		
+	</s:Group>
+	
+</s:WindowedApplication>

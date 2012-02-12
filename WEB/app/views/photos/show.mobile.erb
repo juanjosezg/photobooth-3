@@ -1,0 +1,19 @@
+<div data-role="page" data-fullscreen="true">
+	<div data-role="header" data-position="fixed">
+		<%= link_to 'Home', photos_path, 'data-icon' => "back", 'data-direction' => "reverse" %>
+		<h1>Photos</h1>
+	</div>
+	
+	<div data-role="content" style="padding:0px;">
+		<%= image_tag @photo.image.url(:large), :class => 'photo' %>
+	</div>
+	
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><%= link_to pub_status(@photo.published), toggle_published_photo_path(@photo), :method => :put, 'data-icon' => 'check' %></li>
+				<li><%= link_to "Destroy", @photo, :confirm => 'Are you sure?', :method => :delete, 'data-icon' => 'delete' %></li>
+			</ul>
+		</div>
+	</div>
+</div>

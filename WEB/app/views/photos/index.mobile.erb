@@ -1,0 +1,18 @@
+<div  data-role="page" data-add-back-btn="false">
+	<div data-role="header" data-position="fixed">
+		<h1>Photos</h1>
+		<%= link_to 'Home', photos_path, :id => 'refresh_photos', :class => "ui-btn-right", 'data-icon' => "refresh", 'data-iconpos' => "notext", 'data-transition' => "none" %>
+	</div>
+	
+	<div data-role="content">
+		<ul data-role="listview" data-inset="false" data-theme="c" data-dividertheme="b">
+			<% for photo in @photos %>
+				<li><a href="<%= photo_path(photo) %>">
+					<%= image_tag(photo.image.url(:thumb)) %>
+					<%= 'Published: ' + photo.published.to_s %>
+					</a>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+</div>
